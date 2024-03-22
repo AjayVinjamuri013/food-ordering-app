@@ -22,9 +22,6 @@ export default function Home() {
         <a className="text-2xl" href="tel:+1234567890">+1 (234)567-8910</a>
       </div>
     </section>
-    <footer className="border-t p-8 text-center text-gray-500 mt-16">
-      &copy; 2024 Alll rights reserved
-    </footer>
   </>
   );
 }
