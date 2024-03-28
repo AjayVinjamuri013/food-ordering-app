@@ -6,7 +6,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "@/libs/MongoConnect";
 
-const handler = NextAuth({
+export const authOptions = {
   secret : process.env.SECRET,
   adapter: MongoDBAdapter(clientPromise),
   providers: [
@@ -46,6 +46,8 @@ const handler = NextAuth({
       }
     })
   ]
-});
+}
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST }
