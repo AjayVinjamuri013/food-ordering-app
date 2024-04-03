@@ -1,5 +1,4 @@
 const { Schema, models, model } = require("mongoose");
-var bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({
   name:{type: String},
@@ -9,6 +8,12 @@ const UserSchema = new Schema({
     required: true,
   },
   image: {type:String},
+  phone: {type:String},
+  streetAddress: {type:String},
+  postalCode: {type:String},
+  city: {type:String},
+  phone: {type:String},
+  country: {type:String},
 }, {timestamps: true});
 
 export const User = models.User || model('User', UserSchema);
