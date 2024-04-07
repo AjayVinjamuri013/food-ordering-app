@@ -2,9 +2,11 @@
 
 import { useSession } from "next-auth/react"
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import UserTabs from "../Components/Layout/UserTabs"
 
 export default function ProfilePage(){
   const session = useSession();
@@ -15,6 +17,8 @@ export default function ProfilePage(){
   const [postalCode, setPostalCode] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [profileFetched, setProfileFetched] = useState(false);
   const {status} = session;
 
   useEffect(() => {
@@ -23,11 +27,14 @@ export default function ProfilePage(){
       setImage(session.data?.user.image);
       fetch('/api/profile').then(response => {
         response.json().then(data => {
+          console.log(data);
           setPhone(data.phone);
           setStreetAddress(data.streetAddress);
           setPostalCode(data.postalCode);
           setCity(data.city);
           setCountry(data.country);
+          setIsAdmin(data.admin);
+          setProfileFetched(true);
         })
       })
     }
@@ -88,7 +95,7 @@ export default function ProfilePage(){
     }
   }
 
-  if(status === "loading"){
+  if(status === "loading" || !profileFetched){
     return 'Loading.....'
   }
 
@@ -97,10 +104,8 @@ export default function ProfilePage(){
   }
   return(
     <section className="mt-8">
-      <h1 className="text-center text-primary text-3xl mb-4">
-        Profile
-      </h1>
-      <div className="max-w-md mx-auto">
+      <UserTabs isAdmin={isAdmin}></UserTabs>
+      <div className="max-w-md mx-auto mt-8">
         <div className="flex gap-2">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
